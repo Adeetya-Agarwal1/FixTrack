@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Edit Spare Part | FixTrack
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1>Edit Spare Part</h1>
+
+    <p>
+        Update spare part information.
+    </p>
+
+</div>
+
+
+<div class="form-card">
+
+    <form method="POST">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>Part Code</label>
+
+                <input
+                    type="text"
+                    name="part_code"
+                    value="{{ part['part_code'] }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Part Name</label>
+
+                <input
+                    type="text"
+                    name="part_name"
+                    value="{{ part['part_name'] }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Category</label>
+
+                <input
+                    type="text"
+                    name="category"
+                    value="{{ part['category'] }}"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Brand</label>
+
+                <input
+                    type="text"
+                    name="brand"
+                    value="{{ part['brand'] }}"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Specification</label>
+
+                <input
+                    type="text"
+                    name="specification"
+                    value="{{ part['specification'] }}"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Current Stock</label>
+
+                <input
+                    type="number"
+                    name="current_stock"
+                    min="0"
+                    value="{{ part['current_stock'] }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Reorder Level</label>
+
+                <input
+                    type="number"
+                    name="reorder_level"
+                    min="0"
+                    value="{{ part['reorder_level'] }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Location</label>
+
+                <input
+                    type="text"
+                    name="location"
+                    value="{{ part['location'] }}"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <a
+                href="{{ url_for('spare_parts.spare_parts') }}"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Update Spare Part
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

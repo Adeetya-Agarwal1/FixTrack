@@ -1,0 +1,94 @@
+<aside class="sidebar">
+
+    <div class="sidebar-header">
+
+        <div class="brand-icon">
+            F
+        </div>
+
+        <div>
+            <h2>FixTrack</h2>
+            <p>Maintenance Management</p>
+        </div>
+
+    </div>
+
+
+    <nav class="sidebar-menu">
+
+        <a
+            href="{{ url_for('dashboard.dashboard') }}"
+            class="{% if request.endpoint == 'dashboard.dashboard' %}active{% endif %}"
+        >
+
+            <span class="menu-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                </svg>
+            </span>
+
+            <span>Dashboard</span>
+
+        </a>
+
+
+        <a
+            href="{{ url_for('machines.machines') }}"
+            class="{% if request.blueprint == 'machines' %}active{% endif %}"
+        >
+
+            <span class="menu-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19.43 12.98c.04-.32.07-.65.07-.98s-.03-.66-.07-.98l2.11-1.65-2-3.46-2.49 1a7.15 7.15 0 0 0-1.69-.98L15 3.27h-4l-.36 2.66c-.61.25-1.18.58-1.69.98l-2.49-1-2 3.46 2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65 2 3.46 2.49-1c.51.4 1.08.73 1.69.98L11 20.73h4l.36-2.66c.61-.25 1.18-.58 1.69-.98l2.49 1 2-3.46-2.11-1.65zM13 15.5A3.5 3.5 0 1 1 13 8a3.5 3.5 0 0 1 0 7.5z"/>
+                </svg>
+            </span>
+
+            <span>Machines</span>
+
+        </a>
+
+
+        <a
+            href="{{ url_for('spare_parts.spare_parts') }}"
+            class="{% if request.blueprint == 'spare_parts' %}active{% endif %}"
+        >
+
+            <span class="menu-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2a3 3 0 0 0 6 0h6a3 3 0 0 0 6 0h2v-5l-3-4zM6 18.5A1.5 1.5 0 1 1 6 15a1.5 1.5 0 0 1 0 3.5zM15 15H9a3 3 0 0 0-6 0V6h12v9zm3 3.5a1.5 1.5 0 1 1 0-3.5 1.5 1.5 0 0 1 0 3.5zM17 12V9.5h2.5l1.96 2.5H17z"/>
+                </svg>
+            </span>
+
+            <span>Spare Parts</span>
+
+        </a>
+
+
+        <a
+            href="{{ url_for('maintenance.maintenance') }}"
+            class="{% if request.blueprint == 'maintenance' %}active{% endif %}"
+        >
+
+            <span class="menu-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19.7 12.9c.2-.5.3-1 .3-1.6a4.3 4.3 0 0 0-5.8-4L9.7 2.8a5 5 0 0 0-6.9 6.9l4.5 4.5a4.3 4.3 0 0 0 5.6 5.5l5.6-5.6 2.7 2.7 1.4-1.4-2.9-2.5zM6.4 9.7a3 3 0 0 1-1.7-3.8l3.4 3.4 1.4-1.4-3.4-3.4a3 3 0 0 1 3.8 1.7l4.2 4.2-3.7 3.7-4-4.4zm5.1 8.5a2.3 2.3 0 0 1-2.8-3.5l6-6a2.3 2.3 0 0 1 3.5 2.8l-6.7 6.7z"/>
+                </svg>
+            </span>
+
+            <span>Maintenance Records</span>
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-footer">
+
+        <div class="sidebar-footer-text">
+            <span>FixTrack</span>
+            <small>Version 1.0</small>
+        </div>
+
+    </div>
+
+</aside>

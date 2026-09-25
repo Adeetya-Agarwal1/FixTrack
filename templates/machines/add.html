@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Add Machine | FixTrack
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1>Add Machine</h1>
+
+    <p>
+        Add a new machine to FixTrack.
+    </p>
+
+</div>
+
+
+<div class="form-card">
+
+    <form method="POST">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>Machine Number</label>
+
+                <input
+                    type="text"
+                    name="machine_number"
+                    placeholder="Example: MCH-001"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Machine Name</label>
+
+                <input
+                    type="text"
+                    name="machine_name"
+                    placeholder="Example: Flexo Printing Machine"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Department</label>
+
+                <input
+                    type="text"
+                    name="department"
+                    placeholder="Example: Printing"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Manufacturer</label>
+
+                <input
+                    type="text"
+                    name="manufacturer"
+                    placeholder="Example: Bobst"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Model</label>
+
+                <input
+                    type="text"
+                    name="model"
+                    placeholder="Example: FX-300"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Status</label>
+
+                <select name="status">
+
+                    <option value="Active">
+                        Active
+                    </option>
+
+                    <option value="Inactive">
+                        Inactive
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <a
+                href="{{ url_for('machines.machines') }}"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Save Machine
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

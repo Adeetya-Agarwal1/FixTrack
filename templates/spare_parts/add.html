@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Add Spare Part | FixTrack
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1>Add Spare Part</h1>
+
+    <p>
+        Add a new item to the spare parts inventory.
+    </p>
+
+</div>
+
+
+<div class="form-card">
+
+    <form method="POST">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>Part Code</label>
+
+                <input
+                    type="text"
+                    name="part_code"
+                    placeholder="Example: SP-001"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Part Name</label>
+
+                <input
+                    type="text"
+                    name="part_name"
+                    placeholder="Example: Bearing"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Category</label>
+
+                <input
+                    type="text"
+                    name="category"
+                    placeholder="Example: Mechanical"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Brand</label>
+
+                <input
+                    type="text"
+                    name="brand"
+                    placeholder="Example: SKF"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Specification</label>
+
+                <input
+                    type="text"
+                    name="specification"
+                    placeholder="Example: 6205 ZZ"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Current Stock</label>
+
+                <input
+                    type="number"
+                    name="current_stock"
+                    min="0"
+                    value="0"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Reorder Level</label>
+
+                <input
+                    type="number"
+                    name="reorder_level"
+                    min="0"
+                    value="5"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Location</label>
+
+                <input
+                    type="text"
+                    name="location"
+                    placeholder="Example: Rack A-2"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <a
+                href="{{ url_for('spare_parts.spare_parts') }}"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Save Spare Part
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

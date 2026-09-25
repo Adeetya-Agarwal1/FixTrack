@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Add Maintenance | FixTrack
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1>Add Maintenance Record</h1>
+
+    <p>
+        Record maintenance performed on a machine.
+    </p>
+
+</div>
+
+
+<div class="form-card">
+
+    {% if error %}
+
+    <div class="alert alert-error">
+
+        {{ error }}
+
+    </div>
+
+    {% endif %}
+
+
+    <form method="POST">
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>Machine</label>
+
+                <select name="machine_id" required>
+
+                    <option value="">
+                        Select Machine
+                    </option>
+
+
+                    {% for machine in machines %}
+
+                    <option value="{{ machine['id'] }}" {% if form_data is defined and
+                        form_data["machine_id"]|int==machine["id"] %} selected {% endif %}>
+
+                        {{ machine["machine_number"] }}
+                        -
+                        {{ machine["machine_name"] }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Maintenance Date</label>
+
+                <input type="date" name="maintenance_date"
+                    value="{% if form_data is defined %}{{ form_data['maintenance_date'] }}{% endif %}" required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Spare Part Used</label>
+
+                <select name="spare_part_id">
+
+                    <option value="">
+                        No Spare Part Used
+                    </option>
+
+
+                    {% for part in spare_parts %}
+
+                    <option value="{{ part['id'] }}" {% if form_data is defined and
+                        form_data["spare_part_id"]|int==part["id"] %} selected {% endif %}>
+
+                        {{ part["part_name"] }}
+
+                        {% if part["brand"] %}
+                        -
+                        {{ part["brand"] }}
+                        {% endif %}
+
+                        {% if part["specification"] %}
+                        -
+                        {{ part["specification"] }}
+                        {% endif %}
+
+                        (Stock: {{ part["current_stock"] }})
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Quantity Used</label>
+
+                <input type="number" name="quantity" min="0"
+                    value="{% if form_data is defined %}{{ form_data['quantity'] }}{% else %}0{% endif %}">
+
+            </div>
+
+
+            <div class="form-group form-full-width">
+
+                <label>Remarks</label>
+
+                <textarea name="remarks" rows="4"
+                    placeholder="Describe the maintenance work carried out...">{% if form_data is defined %}{{ form_data["remarks"] }}{% endif %}</textarea>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <a href="{{ url_for('maintenance.maintenance') }}" class="btn btn-secondary">
+                Cancel
+            </a>
+
+
+            <button type="submit" class="btn btn-primary">
+                Save Maintenance Record
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

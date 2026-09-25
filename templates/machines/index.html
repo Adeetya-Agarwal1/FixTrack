@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Machines | FixTrack
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header page-header-row">
+
+    <div>
+
+        <h1>Machines</h1>
+
+        <p>
+            Manage machines registered in FixTrack.
+        </p>
+
+    </div>
+
+
+    <a
+        href="{{ url_for('machines.add_machine') }}"
+        class="btn btn-primary"
+    >
+        Add Machine
+    </a>
+
+</div>
+
+
+<div class="content-card">
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Machine Number</th>
+                    <th>Machine Name</th>
+                    <th>Department</th>
+                    <th>Manufacturer</th>
+                    <th>Model</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% if machines %}
+
+                    {% for machine in machines %}
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                {{ machine["machine_number"] }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ machine["machine_name"] }}
+                        </td>
+
+                        <td>
+                            {{ machine["department"] }}
+                        </td>
+
+                        <td>
+                            {{ machine["manufacturer"] }}
+                        </td>
+
+                        <td>
+                            {{ machine["model"] }}
+                        </td>
+
+                        <td>
+
+                            {% if machine["status"] == "Active" %}
+
+                                <span class="status status-active">
+                                    Active
+                                </span>
+
+                            {% else %}
+
+                                <span class="status status-inactive">
+                                    Inactive
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td class="action-cell">
+
+                            <a
+                                href="{{ url_for('machines.edit_machine', machine_id=machine['id']) }}"
+                                class="action-link"
+                            >
+                                Edit
+                            </a>
+
+                            <a
+                                href="{{ url_for('machines.delete_machine', machine_id=machine['id']) }}"
+                                class="action-link danger"
+                                onclick="return confirm('Delete this machine?')"
+                            >
+                                Delete
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="empty-table"
+                        >
+                            No machines added yet.
+                        </td>
+
+                    </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

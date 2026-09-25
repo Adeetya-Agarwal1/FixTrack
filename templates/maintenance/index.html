@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Maintenance Records | FixTrack
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header page-header-row">
+
+    <div>
+
+        <h1>Maintenance Records</h1>
+
+        <p>
+            View machine maintenance history and spare parts used.
+        </p>
+
+    </div>
+
+
+    <a
+        href="{{ url_for('maintenance.add_maintenance') }}"
+        class="btn btn-primary"
+    >
+        Add Maintenance Record
+    </a>
+
+</div>
+
+
+<div class="content-card">
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Machine</th>
+                    <th>Machine Name</th>
+                    <th>Spare Part</th>
+                    <th>Specification</th>
+                    <th>Quantity</th>
+                    <th>Date</th>
+                    <th>Remarks</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% if records %}
+
+                    {% for record in records %}
+
+                    <tr>
+
+                        <td>
+
+                            <strong>
+                                {{ record["machine_number"] }}
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+                            {{ record["machine_name"] }}
+                        </td>
+
+
+                        <td>
+
+                            {% if record["part_name"] %}
+
+                                {{ record["part_name"] }}
+
+                                {% if record["brand"] %}
+
+                                    <span class="muted-text">
+                                        {{ record["brand"] }}
+                                    </span>
+
+                                {% endif %}
+
+                            {% else %}
+
+                                <span class="muted-text">
+                                    No spare part
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            {% if record["specification"] %}
+
+                                {{ record["specification"] }}
+
+                            {% else %}
+
+                                -
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+                            {{ record["quantity"] }}
+                        </td>
+
+
+                        <td>
+                            {{ record["maintenance_date"] }}
+                        </td>
+
+
+                        <td>
+                            {{ record["remarks"] }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="empty-table"
+                        >
+                            No maintenance records yet.
+                        </td>
+
+                    </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
