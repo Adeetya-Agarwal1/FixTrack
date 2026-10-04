@@ -1,29 +1,47 @@
-<header class="navbar">
+<header class="topbar">
 
-    <div class="navbar-title">
+    <div class="mobile-brand">
+        <div class="mobile-brand-mark">F</div>
+        FIXTRACK
+    </div>
 
-        <span>Maintenance Management System</span>
+
+    <div class="topbar-search">
+
+        <span class="search-icon">⌕</span>
+
+        <input type="text" placeholder="Search anything..." id="globalSearch">
+
+        <kbd>Ctrl K</kbd>
 
     </div>
 
 
-    <div class="navbar-right">
+    <div class="topbar-actions">
 
-        <div class="navbar-user">
+        <button class="icon-button" onclick="showToast('No new notifications')" title="Notifications">
+            ♧
+            <span class="notification-dot"></span>
+        </button>
+
+
+        <div class="user-menu">
 
             <div class="user-avatar">
                 A
             </div>
 
-            <div class="user-info">
+            <div class="user-details">
 
-                <span>Admin</span>
+                <strong>Admin</strong>
 
-                <small>
-                    Administrator
-                </small>
+                <span>Administrator</span>
 
             </div>
+
+            <a href="{{ url_for('auth.logout') }}" class="logout-link" title="Logout">
+                Logout
+            </a>
 
         </div>
 

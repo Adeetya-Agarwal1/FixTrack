@@ -23,7 +23,7 @@ def spare_parts():
 
     return render_template(
         "spare_parts/index.html",
-        parts=parts
+        spare_parts=parts
     )
 
 

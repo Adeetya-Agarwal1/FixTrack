@@ -72,22 +72,27 @@ def add_maintenance():
 
         maintenance_date = request.form["maintenance_date"]
 
-        remarks = request.form["remarks"]
+        remarks = request.form.get("remarks", "")
 
 
-        # If no spare part is selected
         if spare_part_id == "":
             spare_part_id = None
             quantity = 0
 
 
-        # Check available stock
         if spare_part_id:
 
             part = connection.execute(
                 "SELECT * FROM spare_parts WHERE id = ?",
                 (spare_part_id,)
             ).fetchone()
+
+            if part is None:
+
+                connection.close()
+
+                return "Selected spare part was not found.", 400
+
 
             if quantity > part["current_stock"]:
 
@@ -97,26 +102,16 @@ def add_maintenance():
                     f"{part['part_name']} are currently available."
                 )
 
-                form_data = {
-                    "machine_id": machine_id,
-                    "spare_part_id": spare_part_id,
-                    "quantity": quantity,
-                    "maintenance_date": maintenance_date,
-                    "remarks": remarks
-                }
-
                 connection.close()
 
                 return render_template(
                     "maintenance/add.html",
                     machines=machines,
                     spare_parts=spare_parts,
-                    error=error,
-                    form_data=form_data
+                    error=error
                 )
 
 
-        # Save maintenance record
         connection.execute("""
             INSERT INTO maintenance
             (
@@ -136,7 +131,6 @@ def add_maintenance():
         ))
 
 
-        # Deduct spare part stock
         if spare_part_id and quantity > 0:
 
             connection.execute("""
@@ -150,9 +144,12 @@ def add_maintenance():
 
 
         connection.commit()
+
         connection.close()
 
-        return redirect(url_for("maintenance.maintenance"))
+        return redirect(
+            url_for("maintenance.maintenance")
+        )
 
 
     connection.close()

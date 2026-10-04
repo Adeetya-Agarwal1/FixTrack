@@ -11,9 +11,7 @@
     >
 
     <title>
-        {% block title %}
-        FixTrack
-        {% endblock %}
+        {% block title %}FixTrack{% endblock %}
     </title>
 
     <link
@@ -21,16 +19,32 @@
         href="{{ url_for('static', filename='css/style.css') }}"
     >
 
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
 </head>
 
 
 <body>
 
-    <div class="app-container">
+    <div class="app-shell">
 
         {% include "components/sidebar.html" %}
 
-        <div class="main-content">
+        <div class="main-area">
 
             {% include "components/navbar.html" %}
 
@@ -44,6 +58,9 @@
         </div>
 
     </div>
+
+
+    <div id="toast-container"></div>
 
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>

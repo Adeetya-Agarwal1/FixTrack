@@ -1,27 +1,50 @@
 {% extends "base.html" %}
 
-
 {% block title %}
-
 Add Spare Part | FixTrack
-
 {% endblock %}
-
 
 {% block content %}
 
 <div class="page-header">
 
-    <h1>Add Spare Part</h1>
+    <div>
 
-    <p>
-        Add a new item to the spare parts inventory.
-    </p>
+        <div class="eyebrow">
+            INVENTORY MANAGEMENT
+        </div>
+
+        <h1>Add Spare Part</h1>
+
+        <p>
+            Add a new inventory item and define its stock levels.
+        </p>
+
+    </div>
 
 </div>
 
 
 <div class="form-card">
+
+    <div class="form-card-header">
+
+        <div class="form-card-icon">
+            ▣
+        </div>
+
+        <div>
+
+            <h2>Part Details</h2>
+
+            <p>
+                Enter the information used to identify and track this part.
+            </p>
+
+        </div>
+
+    </div>
+
 
     <form method="POST">
 
@@ -29,12 +52,14 @@ Add Spare Part | FixTrack
 
             <div class="form-group">
 
-                <label>Part Code</label>
+                <label>
+                    Part Code
+                </label>
 
                 <input
                     type="text"
                     name="part_code"
-                    placeholder="Example: SP-001"
+                    placeholder="e.g. BRG-004"
                     required
                 >
 
@@ -43,12 +68,14 @@ Add Spare Part | FixTrack
 
             <div class="form-group">
 
-                <label>Part Name</label>
+                <label>
+                    Part Name
+                </label>
 
                 <input
                     type="text"
                     name="part_name"
-                    placeholder="Example: Bearing"
+                    placeholder="e.g. Ball Bearing"
                     required
                 >
 
@@ -57,12 +84,14 @@ Add Spare Part | FixTrack
 
             <div class="form-group">
 
-                <label>Category</label>
+                <label>
+                    Category
+                </label>
 
                 <input
                     type="text"
                     name="category"
-                    placeholder="Example: Mechanical"
+                    placeholder="e.g. Bearings"
                 >
 
             </div>
@@ -70,12 +99,14 @@ Add Spare Part | FixTrack
 
             <div class="form-group">
 
-                <label>Brand</label>
+                <label>
+                    Brand
+                </label>
 
                 <input
                     type="text"
                     name="brand"
-                    placeholder="Example: SKF"
+                    placeholder="e.g. SKF"
                 >
 
             </div>
@@ -83,12 +114,14 @@ Add Spare Part | FixTrack
 
             <div class="form-group">
 
-                <label>Specification</label>
+                <label>
+                    Specification
+                </label>
 
                 <input
                     type="text"
                     name="specification"
-                    placeholder="Example: 6205 ZZ"
+                    placeholder="e.g. 6204-2RS"
                 >
 
             </div>
@@ -96,7 +129,24 @@ Add Spare Part | FixTrack
 
             <div class="form-group">
 
-                <label>Current Stock</label>
+                <label>
+                    Storage Location
+                </label>
+
+                <input
+                    type="text"
+                    name="location"
+                    placeholder="e.g. Rack A-03"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Current Stock
+                </label>
 
                 <input
                     type="number"
@@ -111,7 +161,9 @@ Add Spare Part | FixTrack
 
             <div class="form-group">
 
-                <label>Reorder Level</label>
+                <label>
+                    Reorder Level
+                </label>
 
                 <input
                     type="number"
@@ -123,23 +175,17 @@ Add Spare Part | FixTrack
 
             </div>
 
-
-            <div class="form-group">
-
-                <label>Location</label>
-
-                <input
-                    type="text"
-                    name="location"
-                    placeholder="Example: Rack A-2"
-                >
-
-            </div>
-
         </div>
 
 
         <div class="form-actions">
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Add Spare Part
+            </button>
 
             <a
                 href="{{ url_for('spare_parts.spare_parts') }}"
@@ -147,13 +193,6 @@ Add Spare Part | FixTrack
             >
                 Cancel
             </a>
-
-            <button
-                type="submit"
-                class="btn btn-primary"
-            >
-                Save Spare Part
-            </button>
 
         </div>
 

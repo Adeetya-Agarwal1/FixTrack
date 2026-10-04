@@ -1,103 +1,92 @@
 {% extends "base.html" %}
 
-
 {% block title %}
-
 Edit Spare Part | FixTrack
-
 {% endblock %}
-
 
 {% block content %}
 
 <div class="page-header">
-
-    <h1>Edit Spare Part</h1>
-
-    <p>
-        Update spare part information.
-    </p>
-
+    <div>
+        <div class="eyebrow">INVENTORY MANAGEMENT</div>
+        <h1>Edit Spare Part</h1>
+        <p>Update the information and stock details for this inventory item.</p>
+    </div>
 </div>
 
-
 <div class="form-card">
+
+    <div class="form-card-header">
+        <div class="form-card-icon">▣</div>
+
+        <div>
+            <h2>Part Details</h2>
+            <p>Modify the inventory information below.</p>
+        </div>
+    </div>
 
     <form method="POST">
 
         <div class="form-grid">
 
             <div class="form-group">
-
                 <label>Part Code</label>
-
                 <input
                     type="text"
                     name="part_code"
                     value="{{ part['part_code'] }}"
                     required
                 >
-
             </div>
 
-
             <div class="form-group">
-
                 <label>Part Name</label>
-
                 <input
                     type="text"
                     name="part_name"
                     value="{{ part['part_name'] }}"
                     required
                 >
-
             </div>
 
-
             <div class="form-group">
-
                 <label>Category</label>
-
                 <input
                     type="text"
                     name="category"
-                    value="{{ part['category'] }}"
+                    value="{{ part['category'] or '' }}"
                 >
-
             </div>
 
-
             <div class="form-group">
-
                 <label>Brand</label>
-
                 <input
                     type="text"
                     name="brand"
-                    value="{{ part['brand'] }}"
+                    value="{{ part['brand'] or '' }}"
                 >
-
             </div>
 
-
             <div class="form-group">
-
                 <label>Specification</label>
-
                 <input
                     type="text"
                     name="specification"
-                    value="{{ part['specification'] }}"
+                    value="{{ part['specification'] or '' }}"
                 >
-
             </div>
 
+            <div class="form-group">
+                <label>Storage Location</label>
+                <input
+                    type="text"
+                    name="location"
+                    value="{{ part['location'] or '' }}"
+                >
+            </div>
 
             <div class="form-group">
-
                 <label>Current Stock</label>
-
                 <input
                     type="number"
                     name="current_stock"
@@ -105,14 +94,10 @@ Edit Spare Part | FixTrack
                     value="{{ part['current_stock'] }}"
                     required
                 >
-
             </div>
 
-
             <div class="form-group">
-
                 <label>Reorder Level</label>
-
                 <input
                     type="number"
                     name="reorder_level"
@@ -120,26 +105,18 @@ Edit Spare Part | FixTrack
                     value="{{ part['reorder_level'] }}"
                     required
                 >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Location</label>
-
-                <input
-                    type="text"
-                    name="location"
-                    value="{{ part['location'] }}"
-                >
-
             </div>
 
         </div>
 
-
         <div class="form-actions">
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Save Changes
+            </button>
 
             <a
                 href="{{ url_for('spare_parts.spare_parts') }}"
@@ -147,13 +124,6 @@ Edit Spare Part | FixTrack
             >
                 Cancel
             </a>
-
-            <button
-                type="submit"
-                class="btn btn-primary"
-            >
-                Update Spare Part
-            </button>
 
         </div>
 

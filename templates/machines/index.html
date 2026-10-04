@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 
-
 {% block title %}
-
 Machines | FixTrack
-
 {% endblock %}
-
 
 {% block content %}
 
-<div class="page-header page-header-row">
+<div class="page-header">
 
     <div>
+
+        <div class="eyebrow">
+            ASSET MANAGEMENT
+        </div>
 
         <h1>Machines</h1>
 
         <p>
-            Manage machines registered in FixTrack.
+            Monitor and manage all registered factory equipment.
         </p>
 
     </div>
@@ -27,84 +27,104 @@ Machines | FixTrack
         href="{{ url_for('machines.add_machine') }}"
         class="btn btn-primary"
     >
-        Add Machine
+        + Add Machine
     </a>
 
 </div>
 
 
-<div class="content-card">
+<div class="page-toolbar">
 
-    <div class="table-container">
+    <div class="toolbar-info">
+        <span class="toolbar-dot"></span>
+        Equipment Registry
+    </div>
 
-        <table>
+    <div class="toolbar-count">
+        {{ machines|length }} machine{% if machines|length != 1 %}s{% endif %}
+    </div>
 
-            <thead>
+</div>
+
+
+<div class="table-container machines-table">
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Machine</th>
+                <th>Department</th>
+                <th>Manufacturer</th>
+                <th>Model</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            {% if machines %}
+
+                {% for machine in machines %}
 
                 <tr>
 
-                    <th>Machine Number</th>
-                    <th>Machine Name</th>
-                    <th>Department</th>
-                    <th>Manufacturer</th>
-                    <th>Model</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <td>
 
-                </tr>
+                        <div class="table-primary-text">
+                            {{ machine["machine_number"] }}
+                        </div>
 
-            </thead>
-
-
-            <tbody>
-
-                {% if machines %}
-
-                    {% for machine in machines %}
-
-                    <tr>
-
-                        <td>
-                            <strong>
-                                {{ machine["machine_number"] }}
-                            </strong>
-                        </td>
-
-                        <td>
+                        <div class="table-secondary-text">
                             {{ machine["machine_name"] }}
-                        </td>
+                        </div>
 
-                        <td>
-                            {{ machine["department"] }}
-                        </td>
+                    </td>
 
-                        <td>
-                            {{ machine["manufacturer"] }}
-                        </td>
 
-                        <td>
-                            {{ machine["model"] }}
-                        </td>
+                    <td>
+                        {{ machine["department"] or "—" }}
+                    </td>
 
-                        <td>
 
-                            {% if machine["status"] == "Active" %}
+                    <td>
+                        {{ machine["manufacturer"] or "—" }}
+                    </td>
 
-                                <span class="status status-active">
-                                    Active
-                                </span>
 
-                            {% else %}
+                    <td>
+                        {{ machine["model"] or "—" }}
+                    </td>
 
-                                <span class="status status-inactive">
-                                    Inactive
-                                </span>
 
-                            {% endif %}
+                    <td>
 
-                        </td>
+                        {% if machine["status"] == "Active" %}
 
-                        <td class="action-cell">
+                            <span class="status-badge status-active">
+                                <span class="status-dot"></span>
+                                Active
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-badge status-inactive">
+                                <span class="status-dot"></span>
+                                {{ machine["status"] }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="table-actions">
 
                             <a
                                 href="{{ url_for('machines.edit_machine', machine_id=machine['id']) }}"
@@ -116,37 +136,57 @@ Machines | FixTrack
                             <a
                                 href="{{ url_for('machines.delete_machine', machine_id=machine['id']) }}"
                                 class="action-link danger"
-                                onclick="return confirm('Delete this machine?')"
                             >
                                 Delete
                             </a>
 
-                        </td>
+                        </div>
 
-                    </tr>
+                    </td>
 
-                    {% endfor %}
+                </tr>
 
-                {% else %}
+                {% endfor %}
 
-                    <tr>
+            {% else %}
 
-                        <td
-                            colspan="7"
-                            class="empty-table"
-                        >
-                            No machines added yet.
-                        </td>
+                <tr>
 
-                    </tr>
+                    <td
+                        colspan="6"
+                        class="empty-table"
+                    >
 
-                {% endif %}
+                        <div class="empty-state">
 
-            </tbody>
+                            <div class="empty-state-icon">
+                                ⚙
+                            </div>
 
-        </table>
+                            <strong>No machines registered</strong>
 
-    </div>
+                            <span>
+                                Add your first machine to start tracking equipment.
+                            </span>
+
+                            <a
+                                href="{{ url_for('machines.add_machine') }}"
+                                class="btn btn-primary"
+                            >
+                                + Add Machine
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            {% endif %}
+
+        </tbody>
+
+    </table>
 
 </div>
 

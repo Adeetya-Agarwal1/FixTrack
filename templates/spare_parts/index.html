@@ -1,125 +1,128 @@
 {% extends "base.html" %}
 
-
 {% block title %}
-
-Spare Parts | FixTrack
-
+Inventory | FixTrack
 {% endblock %}
-
 
 {% block content %}
 
-<div class="page-header page-header-row">
+<div class="page-header">
 
     <div>
 
-        <h1>Spare Parts Inventory</h1>
+        <div class="eyebrow">
+            INVENTORY MANAGEMENT
+        </div>
+
+        <h1>Inventory</h1>
 
         <p>
-            Manage spare parts and stock levels.
+            Track spare parts and stock levels.
         </p>
 
     </div>
-
 
     <a
         href="{{ url_for('spare_parts.add_spare_part') }}"
         class="btn btn-primary"
     >
-        Add Spare Part
+        + Add Spare Part
     </a>
 
 </div>
 
 
-<div class="content-card">
+<div class="page-toolbar">
 
-    <div class="table-container">
+    <div class="toolbar-info">
+        <span class="toolbar-dot"></span>
+        Spare Parts Inventory
+    </div>
 
-        <table>
+    <div class="toolbar-count">
+        {{ spare_parts|length }}
+        spare part{% if spare_parts|length != 1 %}s{% endif %}
+    </div>
 
-            <thead>
+</div>
+
+
+<div class="table-container">
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Part</th>
+                <th>Category</th>
+                <th>Brand</th>
+                <th>Stock</th>
+                <th>Location</th>
+                <th>Actions</th>
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            {% if spare_parts %}
+
+                {% for part in spare_parts %}
 
                 <tr>
 
-                    <th>Part Code</th>
-                    <th>Part Name</th>
-                    <th>Category</th>
-                    <th>Brand</th>
-                    <th>Specification</th>
-                    <th>Stock</th>
-                    <th>Reorder Level</th>
-                    <th>Location</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <td>
 
-                </tr>
+                        <div class="table-primary-text">
+                            {{ part["part_code"] }}
+                        </div>
 
-            </thead>
-
-
-            <tbody>
-
-                {% if parts %}
-
-                    {% for part in parts %}
-
-                    <tr>
-
-                        <td>
-                            <strong>
-                                {{ part["part_code"] }}
-                            </strong>
-                        </td>
-
-                        <td>
+                        <div class="table-secondary-text">
                             {{ part["part_name"] }}
-                        </td>
+                        </div>
 
-                        <td>
-                            {{ part["category"] }}
-                        </td>
+                    </td>
 
-                        <td>
-                            {{ part["brand"] }}
-                        </td>
 
-                        <td>
-                            {{ part["specification"] }}
-                        </td>
+                    <td>
+                        {{ part["category"] or "—" }}
+                    </td>
 
-                        <td>
-                            {{ part["current_stock"] }}
-                        </td>
 
-                        <td>
-                            {{ part["reorder_level"] }}
-                        </td>
+                    <td>
+                        {{ part["brand"] or "—" }}
+                    </td>
 
-                        <td>
-                            {{ part["location"] }}
-                        </td>
 
-                        <td>
+                    <td>
 
-                            {% if part["current_stock"] <= part["reorder_level"] %}
+                        {% if part["current_stock"] <= part["reorder_level"] %}
 
-                                <span class="status status-low">
-                                    Low Stock
-                                </span>
+                            <span class="status-badge status-warning">
+                                {{ part["current_stock"] }} Low
+                            </span>
 
-                            {% else %}
+                        {% else %}
 
-                                <span class="status status-active">
-                                    In Stock
-                                </span>
+                            <span class="status-badge status-active">
+                                {{ part["current_stock"] }} In Stock
+                            </span>
 
-                            {% endif %}
+                        {% endif %}
 
-                        </td>
+                    </td>
 
-                        <td class="action-cell">
+
+                    <td>
+                        {{ part["location"] or "—" }}
+                    </td>
+
+
+                    <td>
+
+                        <div class="table-actions">
 
                             <a
                                 href="{{ url_for('spare_parts.edit_spare_part', part_id=part['id']) }}"
@@ -131,37 +134,57 @@ Spare Parts | FixTrack
                             <a
                                 href="{{ url_for('spare_parts.delete_spare_part', part_id=part['id']) }}"
                                 class="action-link danger"
-                                onclick="return confirm('Delete this spare part?')"
                             >
                                 Delete
                             </a>
 
-                        </td>
+                        </div>
 
-                    </tr>
+                    </td>
 
-                    {% endfor %}
+                </tr>
 
-                {% else %}
+                {% endfor %}
 
-                    <tr>
+            {% else %}
 
-                        <td
-                            colspan="10"
-                            class="empty-table"
-                        >
-                            No spare parts added yet.
-                        </td>
+                <tr>
 
-                    </tr>
+                    <td
+                        colspan="6"
+                        class="empty-table"
+                    >
 
-                {% endif %}
+                        <div class="empty-state">
 
-            </tbody>
+                            <div class="empty-state-icon">
+                                ▣
+                            </div>
 
-        </table>
+                            <strong>No spare parts registered</strong>
 
-    </div>
+                            <span>
+                                Add your first spare part to start tracking inventory.
+                            </span>
+
+                            <a
+                                href="{{ url_for('spare_parts.add_spare_part') }}"
+                                class="btn btn-primary"
+                            >
+                                + Add Spare Part
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            {% endif %}
+
+        </tbody>
+
+    </table>
 
 </div>
 

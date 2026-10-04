@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+
+{% block title %}Reports | FixTrack{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <div class="eyebrow">
+            REPORTING
+        </div>
+
+        <h1>
+            Reports
+        </h1>
+
+        <p>
+            Analyze maintenance and spare parts usage.
+        </p>
+    </div>
+
+</div>
+
+
+<div class="report-summary">
+
+    <div class="report-stat">
+
+        <div class="report-stat-label">
+            TOTAL CONSUMED
+        </div>
+
+        <div class="report-stat-value">
+            {{ total_consumed }}
+        </div>
+
+        <div class="report-stat-description">
+            Spare parts used
+        </div>
+
+    </div>
+
+
+    <div class="report-stat">
+
+        <div class="report-stat-label">
+            PARTS USED
+        </div>
+
+        <div class="report-stat-value">
+            {{ total_parts_used }}
+        </div>
+
+        <div class="report-stat-description">
+            Different spare parts
+        </div>
+
+    </div>
+
+
+    <div class="report-stat">
+
+        <div class="report-stat-label">
+            MAINTENANCE RECORDS
+        </div>
+
+        <div class="report-stat-value">
+            {{ total_records }}
+        </div>
+
+        <div class="report-stat-description">
+            Records with consumption
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="dashboard-section report-section">
+
+    <div class="section-header">
+
+        <div>
+            <div class="eyebrow">
+                INVENTORY ANALYSIS
+            </div>
+
+            <h2>
+                Spare Parts Consumption
+            </h2>
+        </div>
+
+        <div class="report-status">
+            <span class="status-dot"></span>
+            Live Data
+        </div>
+
+    </div>
+
+
+    {% if consumption_report %}
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Part Code</th>
+                    <th>Part Name</th>
+                    <th>Brand</th>
+                    <th>Specification</th>
+                    <th>Total Used</th>
+                    <th>Maintenance Records</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for part in consumption_report %}
+
+                <tr>
+
+                    <td>
+                        <strong>
+                            {{ part["part_code"] }}
+                        </strong>
+                    </td>
+
+                    <td>
+                        {{ part["part_name"] }}
+                    </td>
+
+                    <td>
+                        {{ part["brand"] or "—" }}
+                    </td>
+
+                    <td>
+                        {{ part["specification"] or "—" }}
+                    </td>
+
+                    <td>
+
+                        <span class="consumption-value">
+                            {{ part["total_used"] }}
+                        </span>
+
+                    </td>
+
+                    <td>
+                        {{ part["maintenance_count"] }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-state">
+
+        <div class="empty-state-icon">
+            ▤
+        </div>
+
+        <h3>
+            No consumption data yet
+        </h3>
+
+        <p>
+            Spare part usage will appear here once maintenance records are added.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+<div class="report-note">
+
+    <span>✦</span>
+
+    <div>
+        <strong>About this report</strong>
+
+        <p>
+            Consumption is calculated automatically from spare parts used during maintenance activities.
+        </p>
+    </div>
+
+</div>
+
+{% endblock %}

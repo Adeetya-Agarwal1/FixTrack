@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 
-
 {% block title %}
-
-Maintenance Records | FixTrack
-
+Maintenance | FixTrack
 {% endblock %}
-
 
 {% block content %}
 
-<div class="page-header page-header-row">
+<div class="page-header">
 
     <div>
 
-        <h1>Maintenance Records</h1>
+        <div class="eyebrow">
+            SERVICE OPERATIONS
+        </div>
+
+        <h1>Maintenance</h1>
 
         <p>
-            View machine maintenance history and spare parts used.
+            Review maintenance activity and service history.
         </p>
 
     </div>
@@ -27,135 +27,163 @@ Maintenance Records | FixTrack
         href="{{ url_for('maintenance.add_maintenance') }}"
         class="btn btn-primary"
     >
-        Add Maintenance Record
+        + Log Maintenance
     </a>
 
 </div>
 
 
-<div class="content-card">
+<div class="page-toolbar">
 
-    <div class="table-container">
+    <div class="toolbar-info">
+        <span class="toolbar-dot"></span>
+        Maintenance History
+    </div>
 
-        <table>
+    <div class="toolbar-count">
+        {{ records|length }} record{% if records|length != 1 %}s{% endif %}
+    </div>
 
-            <thead>
+</div>
+
+
+<div class="table-container maintenance-table">
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Machine</th>
+                <th>Spare Part</th>
+                <th>Quantity</th>
+                <th>Date</th>
+                <th>Remarks</th>
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            {% if records %}
+
+                {% for record in records %}
 
                 <tr>
 
-                    <th>Machine</th>
-                    <th>Machine Name</th>
-                    <th>Spare Part</th>
-                    <th>Specification</th>
-                    <th>Quantity</th>
-                    <th>Date</th>
-                    <th>Remarks</th>
+                    <td>
+
+                        <div class="table-primary-text">
+                            {{ record["machine_number"] }}
+                        </div>
+
+                        <div class="table-secondary-text">
+                            {{ record["machine_name"] }}
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        {% if record["part_name"] %}
+
+                            <div class="table-primary-text">
+                                {{ record["part_name"] }}
+                            </div>
+
+                            <div class="table-secondary-text">
+
+                                {{ record["part_code"] }}
+
+                                {% if record["brand"] %}
+                                    · {{ record["brand"] }}
+                                {% endif %}
+
+                            </div>
+
+                        {% else %}
+
+                            <span class="muted-text">
+                                No spare part
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="quantity-badge">
+                            {{ record["quantity"] }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        {{ record["maintenance_date"] }}
+                    </td>
+
+
+                    <td>
+
+                        {% if record["remarks"] %}
+
+                            {{ record["remarks"] }}
+
+                        {% else %}
+
+                            <span class="muted-text">
+                                No remarks
+                            </span>
+
+                        {% endif %}
+
+                    </td>
 
                 </tr>
 
-            </thead>
+                {% endfor %}
 
+            {% else %}
 
-            <tbody>
+                <tr>
 
-                {% if records %}
+                    <td colspan="5" class="empty-table">
 
-                    {% for record in records %}
+                        <div class="empty-state">
 
-                    <tr>
+                            <div class="empty-state-icon">
+                                ⌁
+                            </div>
 
-                        <td>
+                            <strong>No maintenance records</strong>
 
-                            <strong>
-                                {{ record["machine_number"] }}
-                            </strong>
+                            <span>
+                                Log your first maintenance activity to see it here.
+                            </span>
 
-                        </td>
+                            <a
+                                href="{{ url_for('maintenance.add_maintenance') }}"
+                                class="btn btn-primary"
+                            >
+                                + Log Maintenance
+                            </a>
 
+                        </div>
 
-                        <td>
-                            {{ record["machine_name"] }}
-                        </td>
+                    </td>
 
+                </tr>
 
-                        <td>
+            {% endif %}
 
-                            {% if record["part_name"] %}
+        </tbody>
 
-                                {{ record["part_name"] }}
-
-                                {% if record["brand"] %}
-
-                                    <span class="muted-text">
-                                        {{ record["brand"] }}
-                                    </span>
-
-                                {% endif %}
-
-                            {% else %}
-
-                                <span class="muted-text">
-                                    No spare part
-                                </span>
-
-                            {% endif %}
-
-                        </td>
-
-
-                        <td>
-
-                            {% if record["specification"] %}
-
-                                {{ record["specification"] }}
-
-                            {% else %}
-
-                                -
-
-                            {% endif %}
-
-                        </td>
-
-
-                        <td>
-                            {{ record["quantity"] }}
-                        </td>
-
-
-                        <td>
-                            {{ record["maintenance_date"] }}
-                        </td>
-
-
-                        <td>
-                            {{ record["remarks"] }}
-                        </td>
-
-                    </tr>
-
-                    {% endfor %}
-
-                {% else %}
-
-                    <tr>
-
-                        <td
-                            colspan="7"
-                            class="empty-table"
-                        >
-                            No maintenance records yet.
-                        </td>
-
-                    </tr>
-
-                {% endif %}
-
-            </tbody>
-
-        </table>
-
-    </div>
+    </table>
 
 </div>
 

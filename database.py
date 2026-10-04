@@ -1,25 +1,21 @@
 import sqlite3
-
+from werkzeug.security import generate_password_hash
 
 DATABASE = "fixtrack.db"
 
 
 def get_connection():
-    connection = sqlite3.connect(DATABASE)
-
-    # Allows us to access columns by name
-    # Example: machine["machine_name"]
+    connection = sqlite3.connect(DATABASE, timeout=10)
     connection.row_factory = sqlite3.Row
-
+    connection.execute("PRAGMA foreign_keys = ON")
     return connection
 
 
 def create_tables():
-    connection = get_connection()
-    cursor = connection.cursor()
 
-    # Machines table
-    cursor.execute("""
+    connection = get_connection()
+
+    connection.execute("""
         CREATE TABLE IF NOT EXISTS machines (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             machine_number TEXT UNIQUE NOT NULL,
@@ -31,8 +27,7 @@ def create_tables():
         )
     """)
 
-    # Spare Parts table
-    cursor.execute("""
+    connection.execute("""
         CREATE TABLE IF NOT EXISTS spare_parts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             part_code TEXT UNIQUE NOT NULL,
@@ -46,8 +41,7 @@ def create_tables():
         )
     """)
 
-    # Maintenance Records table
-    cursor.execute("""
+    connection.execute("""
         CREATE TABLE IF NOT EXISTS maintenance (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             machine_id INTEGER NOT NULL,
@@ -56,16 +50,41 @@ def create_tables():
             maintenance_date TEXT NOT NULL,
             remarks TEXT,
 
-            FOREIGN KEY (machine_id) REFERENCES machines(id),
-            FOREIGN KEY (spare_part_id) REFERENCES spare_parts(id)
+            FOREIGN KEY (machine_id)
+                REFERENCES machines(id)
+                ON DELETE CASCADE,
+
+            FOREIGN KEY (spare_part_id)
+                REFERENCES spare_parts(id)
+                ON DELETE SET NULL
         )
     """)
+    
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )
+    """)
+    
+    existing_user = connection.execute(
+        "SELECT id FROM users WHERE username = ?",
+        ("admin",)
+    ).fetchone()
+
+    if existing_user is None:
+
+        connection.execute(
+            """
+            INSERT INTO users (username, password)
+            VALUES (?, ?)
+            """,
+            (
+                "admin",
+                generate_password_hash("admin123")
+            )
+        )
 
     connection.commit()
     connection.close()
-
-    print("FixTrack database created successfully.")
-
-
-if __name__ == "__main__":
-    create_tables()
